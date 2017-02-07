@@ -15,11 +15,14 @@ class Auth {
   }
 
   static getUserToken() {
-    sessionStorage.getItem('oauth_token');
+    return sessionStorage.getItem('oauth_token');
   }
 
   static getUserRefreshToken() {
-    sessionStorage.getItem('refresh_token');
+    return sessionStorage.getItem('refresh_token');
+  }
+  static getUserEmail() {
+    return sessionStorage.getItem('email');
   }
 
 }

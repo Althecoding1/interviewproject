@@ -57,6 +57,32 @@ module.exports = {
     });
   },
 
+  getUserObject: (email, callback) => {
+    let p = new Promise(function(resolve, reject) {
+      db.retrieveUserObject(email, (id) => {
+        resolve(id);
+      })
+    });
+    p.then( (res) => {
+      let options = {
+        _id: res,
+        fingerprint: '123456',
+        ip_address: Helpers.getUserIP()
+      };
+      Users.get(
+        client,
+        options,
+        function(errResp, userResponse) {
+          if(errResp) {
+            console.log(errResp);
+          } else {
+            callback(userResponse);
+          }
+        }
+      )
+    });
+  },
+
   newUser: (data, callback) => {
     let payload = {
       logins: [{

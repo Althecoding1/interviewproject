@@ -32,6 +32,7 @@ class LoginPage extends Component {
         this.setState({errors: res.data.errors});
       } else {
         Auth.authenticateUser(res.data.oauth_key, res.data.json.refresh_token);
+        sessionStorage.setItem('email', this.state.user.email);
         this.setState({errors: {}, loading: false});
         browserHistory.push('/');
       }

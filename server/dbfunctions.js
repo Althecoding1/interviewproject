@@ -44,6 +44,17 @@ module.exports = {
         })
       }
     });
-  }
+  },
 
+  retrieveUserObject: (email, callback) => {
+    db.query("SELECT user_id FROM Users WHERE email='" + email + "';", (err, rows) => {
+      if(err) {
+        throw err;
+      } else {
+        rows = JSON.stringify(rows);
+        rows = JSON.parse(rows);
+        return callback(rows[0].user_id);
+      }
+    });
+  }
 }

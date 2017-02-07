@@ -11,9 +11,10 @@ import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 import {Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow, TableRowColumn}
   from 'material-ui/Table';
 import DatePicker from 'material-ui/DatePicker';
+import LoadWebCam from './Webcam.jsx';
 
 
-const DocumentsForm = ({ onChange, onSubmit, onClick, entities, documents }) => (
+const DocumentsForm = ({ onChange, onSubmit, onClick, entities, documents, onUpdate }) => (
 
   <Card className="container">
     <form action="/" onSubmit={onSubmit}>
@@ -53,11 +54,11 @@ const DocumentsForm = ({ onChange, onSubmit, onClick, entities, documents }) => 
         <Card>
           <CardHeader title="Entity Type" subtitle="Please choose an entity type" actAsExpander={true} showExpandableButton={true}/>
           <CardText expandable={true}>
-          <Table>
+          <Table onCellClick={onClick}>
             <TableBody>
               {entities.map( (entity, index) => (
-                <TableRow key={index} className={entity} name="type" onClick={onClick}>
-                  <TableRowColumn name="type">{entity}</TableRowColumn>
+                <TableRow key={index} name="type">
+                  <TableRowColumn>{entity}</TableRowColumn>
                 </TableRow>
               ))}
             </TableBody>
@@ -66,28 +67,38 @@ const DocumentsForm = ({ onChange, onSubmit, onClick, entities, documents }) => 
         </Card>
       </div>
       <div className="field-line">
-        <DatePicker hintText="Date of Birth or Date of Founding" container="inline" name="dob" mode="landscape" />
+        <DatePicker hintText="Date of Birth or Date of Founding" container="inline" name="dob" mode="landscape" onChange={onClick}/>
       </div>
-      <Card>
-        <CardHeader title="Address" actAsExpander={true} showExpandableButton={true}/>
-        <CardText expandable={true}>
-          <div className="field-line">
-            <TextField floatingLabelText="Street" name="street" onChange={onChange} value={documents.street}/>
-          </div>
-          <div className="field-line">
-            <TextField floatingLabelText="City" name="city" onChange={onChange} value={documents.city}/>
-          </div>
-          <div className="field-line">
-            <TextField floatingLabelText="State" name="state" onChange={onChange} value={documents.state}/>
-          </div>
-          <div className="field-line">
-            <TextField floatingLabelText="Zip Code" name="zipcode" onChange={onChange} value={documents.zipcode}/>
-          </div>
-          <div className="field-line">
-            <TextField floatingLabelText="Country" name="country" onChange={onChange} value={documents.country}/>
-          </div>
-        </CardText>
-      </Card>
+      <div className="field-line">
+        <Card>
+          <CardHeader title="Address" actAsExpander={true} showExpandableButton={true}/>
+          <CardText expandable={true}>
+            <div className="field-line">
+              <TextField floatingLabelText="Street" name="street" onChange={onChange} value={documents.street}/>
+            </div>
+            <div className="field-line">
+              <TextField floatingLabelText="City" name="city" onChange={onChange} value={documents.city}/>
+            </div>
+            <div className="field-line">
+              <TextField floatingLabelText="State" name="state" onChange={onChange} value={documents.state}/>
+            </div>
+            <div className="field-line">
+              <TextField floatingLabelText="Zip Code" name="zipcode" onChange={onChange} value={documents.zipcode}/>
+            </div>
+            <div className="field-line">
+              <TextField floatingLabelText="Country" name="country" onChange={onChange} value={documents.country}/>
+            </div>
+          </CardText>
+        </Card>
+      </div>
+      <div className="field-line">
+        <Card>
+          <CardHeader title="Images" subtitle="Upload a Selfie" actAsExpander={true} showExpandableButton={true}/>
+          <CardText expandable={true}>
+            <LoadWebCam onClick={onUpdate}/>
+          </CardText>
+        </Card>
+      </div>
       <div className="button-line">
         <RaisedButton type="submit" label="Update Documents" primary/>
       </div>
@@ -101,7 +112,8 @@ DocumentsForm.propTypes = {
   onChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,
-  documents: PropTypes.object.isRequired
+  documents: PropTypes.object.isRequired,
+  onUpdate: PropTypes.func.isRequired
 }
 
 export default DocumentsForm;
