@@ -6,12 +6,13 @@ const Helpers = Synapsepay.Helpers;
 const Users = Synapsepay.Users;
 const dbQuery = require('../dbfunctions.js');
 const synapseAPI = require('../synapseAPI.js');
+const config = require('../config.js')
 
 const Router = new express.Router();
 
 const client = new Clients(
-  'id-8cebd353-7269-489d-a7f8-85d35fef23bf',
-  'secret-1b0ab167-3482-41db-b607-d9bd13c714af',
+  config.CLIENT_ID,
+  config.CLIENT_SECRET,
   false
 );
 let user;

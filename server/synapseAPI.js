@@ -2,12 +2,12 @@ const Synapsepay = require('synapsepay');
 const Clients = Synapsepay.Clients;
 const Helpers = Synapsepay.Helpers;
 const Users = Synapsepay.Users;
-
+const config = require('./config.js')
 const db = require('./dbfunctions.js');
 
 const client = new Clients(
-  'id-8cebd353-7269-489d-a7f8-85d35fef23bf',
-  'secret-1b0ab167-3482-41db-b607-d9bd13c714af',
+  config.CLIENT_ID,
+  config.CLIENT_SECRET,
   false
 );
 let user;
