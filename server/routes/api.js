@@ -18,17 +18,35 @@ const client = new Clients(
 let user;
 let users;
 
+const entityType = {
+  'Male': 'M',
+  'Female': 'F',
+  'Other': 'O',
+  'Do not wish to specify': 'NOT_KNOWN',
+  'Limited Liability Company': 'LLC',
+  'Corporation': 'CORP',
+  'Any Type of Partnership': 'PARTNERSHIP',
+  'Sole Proprietorship': 'SOLE-PROPRIETORSHIP',
+  'Trust': 'TRUST',
+  'Estate': 'ESTATE'
+}
+
 Router.post('/updateDocs', (req, res) => {
-  let date = req.body.documents.dob;
-  let year = date.slice(0, 4);
-  let month = date.slice(5, 7);
-  let day = date.slice(8, 10);
+  let date = req.body.documents.dob + '';
+  console.log(typeof date);
+  let year = Number(date.slice(0, 4));
+  let month = Number(date.slice(5, 7));
+  let day = Number(date.slice(8, 10));
   const docsPayload = {
     documents: [
       {
+        email: req.body.documents.email ,
+        phone_number: req.body.documents.phoneNumber,
+        ip: Helpers.getUserIP(),
+        name: req.body.documents.name,
         alias: req.body.documents.alias,
-        entity_type: req.body.documents.entity,
-        entity_scope: req.body.documents.scope,
+        entity_type: entityType[req.body.documents.entity],
+        entity_scope: req.body.documents.type,
         day: day,
         month: month,
         year: year,
@@ -47,16 +65,13 @@ Router.post('/updateDocs', (req, res) => {
     ]
   };
   synapseAPI.getUserObject(req.body.documents.email, (user) => {
-    console.log(user);
-    user.update(
+    user.addDocuments(
       docsPayload,
       (err, userResponse) => {
-        console.log(this.config);
         if(err) {
           console.log(err);
         } else {
           user = userResponse;
-          console.log(user);
           res.send(user);
         }
       }

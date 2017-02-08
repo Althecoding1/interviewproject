@@ -20,7 +20,13 @@ const DocumentsForm = ({ onChange, onSubmit, onClick, entities, documents, onUpd
     <form action="/" onSubmit={onSubmit}>
       <h2 className="card-heading">Upload Documents</h2>
       <div className="field-line">
+        <TextField floatingLabelText="Name" name="name" onChange={onChange} value={documents.name}/>
+      </div>
+      <div className="field-line">
         <TextField floatingLabelText="Alias" name="alias" onChange={onChange} value={documents.alias}/>
+      </div>
+      <div className="field-line">
+        <TextField floatingLabelText="Phone Number" name="phoneNumber" onChange={onChange} value={documents.phoneNumber}/>
       </div>
       <div className="field-line">
         <Menu disableAutoFocus={true}>

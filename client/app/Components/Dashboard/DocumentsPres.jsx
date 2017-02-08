@@ -13,7 +13,9 @@ class DocumentsPres extends Component {
     this.state = {
       entities: ['Not Known', 'Airport', 'Arts & Entertainment', 'Automotive', 'Banks & Financial Services', 'Bar', 'Book Store', 'Buisness Services', 'Religious Organization', 'Club', 'Community/Government', 'Concert Venue', 'Doctor', 'Event Planning/Event Services', 'Food/Grocery', 'Health/Medical/Pharmacy', 'Home Improvement', 'Hospital/Clinic', 'Hotel', 'Landmark', 'Lawyer', 'Library', 'Licensed Financial Representative', 'Local Business', 'Middle School', 'Movie Theater', 'Museum/Art Gallery', 'Outdoor Gear/Sporting Goods', 'Pet Services', 'Professional Services', 'Public Places', 'Real Estate', 'Restaurant/Cafe', 'School', 'Shopping/Retail', 'Spas/Beauty/Personal Care', 'Sports Venue', 'Sports/Recreation/Activities', 'Tours/Sightseeing', 'Train Station', 'Transportation', 'University', 'Aerospace/Defence', 'Automobiles and Parts', 'Bank/Financial Institution', 'Biotechnology', 'Cause', 'Chemicals', 'Community Organization', 'Company', 'Computers/Technology', 'Consulting/Business Services', 'Education', 'Elementary School', 'Energy/Utility', 'Engineering/Construction', 'Farming/Agriculture', 'Food/Beverages', 'Government Organization', 'Health/Beauty', 'Health/Medical/Pharmaceuticals', 'Industrials', 'Insurance Company', 'Internet/Software', 'Legal/Law', 'Media/News/Publishing', 'Mining/Materials', 'Non-Government Organization', 'Non-Profit Organization', 'Organization', 'Political Organization', 'Political Party', 'Preschool', 'Retail and Consumer Merchandise', 'Small Business', 'Telecommunication', 'Transport/Freight', 'Travel/Leisure'],
       documents: {
+        name: '',
         email: Auth.getUserEmail(),
+        phoneNumber: '',
         alias: '',
         entity: '',
         type: '',
@@ -34,7 +36,7 @@ class DocumentsPres extends Component {
 
   processSubmit(e) {
     e.preventDefault();
-
+    console.log(this.state.documents);
     axios.post('/api/updateDocs', {
       documents: this.state.documents
     }).then( (res) => {
@@ -60,12 +62,14 @@ class DocumentsPres extends Component {
     if(typeof e === 'number') {
       const documents = this.state.documents;
       const type = "type";
-      documents[type] = this.state.entities[e];
+      let specify = this.state.entities[e];
+      documents[type] = specify;
       this.setState({documents});
     } else {
         const documents = this.state.documents;
         const entity = "entity";
         let text = e.target.innerText;
+        console.log(text);
         documents[entity] = text;
         this.setState({documents});
       }
