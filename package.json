@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "watch": "webpack -d --watch",
-    "build": "webpack",
+    "build": "webpack && npm start",
     "start": "nodemon server/server.js"
   },
   "author": "",
